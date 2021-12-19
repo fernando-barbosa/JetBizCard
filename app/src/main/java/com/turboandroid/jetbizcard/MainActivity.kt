@@ -1,7 +1,6 @@
 package com.turboandroid.jetbizcard
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -21,7 +20,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.turboandroid.jetbizcard.ui.theme.JetBizCardTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
@@ -77,9 +78,7 @@ fun CreateBizCard() {
                 if(buttonClickState.value) {
                     Content()
                 } else {
-                    Box(){
-
-                    }
+                    Box {}
                 }
             }
         }
@@ -99,10 +98,10 @@ fun Content() {
             .fillMaxWidth()
             .fillMaxHeight(),
             color = Color.White,
-            shape = RoundedCornerShape(corner = CornerSize(6.dp)),
+            shape = RoundedCornerShape(corner = CornerSize(2.dp)),
             border = BorderStroke(width = 2.dp, color = Color.LightGray)) {
 
-            Portfolio(data = listOf("Project 1", "Project 2", "Project 3"))
+            Portfolio(data = listOf("Project 1", "Project 2", "Project 3",  "Project 4",  "Project 5",  "Project 6"))
         }
     }
 }
@@ -111,7 +110,35 @@ fun Content() {
 fun Portfolio(data: List<String>) {
     LazyColumn {
         items(data) { item ->
-            Text(item, color = Color.DarkGray)
+            Card(modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth(),
+                backgroundColor = Color.White,
+                shape = RectangleShape) {
+
+                Row(modifier = Modifier
+                    .padding(8.dp)
+                    .padding(8.dp)) {
+
+                    CreateImageProfile(modifier = Modifier.size(100.dp))
+
+                    Column(modifier = Modifier
+                        .padding(8.dp)
+                        .align(alignment = Alignment.CenterVertically)
+                    ) {
+                        Text(
+                            text = item,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.DarkGray
+                        )
+                        Text(
+                            text = "A great Project!",
+                            style = MaterialTheme.typography.body2,
+                            color = Color.DarkGray
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -141,7 +168,7 @@ private fun CreateInfo() {
 @Composable
 private fun CreateImageProfile(modifier: Modifier = Modifier) {
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .size(150.dp)
             .padding(5.dp),
         shape = CircleShape,
@@ -154,7 +181,7 @@ private fun CreateImageProfile(modifier: Modifier = Modifier) {
                 id = R.drawable.ic_icon
             ),
             contentDescription = "profile image",
-            modifier = Modifier.size(135.dp)
+            modifier = modifier.size(135.dp)
         )
     }
 }
